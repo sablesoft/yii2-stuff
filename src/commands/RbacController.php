@@ -58,7 +58,7 @@ class RbacController extends Controller
     protected function createDomains(Role $admin) : void
     {
         $auth = \Yii::$app->authManager;
-        $domains = AccessHelper::get(AccessHelper::PARAMS_DOMAINS);
+        $domains = AccessHelper::get(AccessHelper::PARAMS_DOMAINS, []);
         if (!$domains) {
             $this->createApp($admin);
         }
