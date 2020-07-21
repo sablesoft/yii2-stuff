@@ -3,7 +3,7 @@
 namespace sablesoft\stuff\interfaces;
 
 /**
- * Interface IsIsDeletedInterface
+ * Interface IsDeletedInterface
  * @package sablesoft\stuff\interfaces
  */
 interface IsDeletedInterface

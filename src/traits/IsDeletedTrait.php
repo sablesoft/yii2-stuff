@@ -3,8 +3,7 @@
 namespace sablesoft\stuff\traits;
 
 use yii\base\Exception;
-use sablesoft\stuff\helpers\DateTimeHelper;
-use sablesoft\stuff\interfaces\IsIsDeletedInterface;
+use sablesoft\stuff\interfaces\IsDeletedInterface;
 
 /**
  * Trait IsDeletedTrait
@@ -29,27 +28,11 @@ trait IsDeletedTrait
     }
 
     /**
-     * @return mixed
-     * @throws Exception
-     * @todo - change to behavior
-     */
-//    public function delete()
-//    {
-//        $deleted = $this->deletedField();
-//        if (!$this->hasAttribute($deleted)) {
-//            throw new Exception("Invalid deleted field!");
-//        }
-//        return $this->updateAttributes([
-//            $deleted => DateTimeHelper::now()
-//        ]);
-//    }
-
-    /**
      * @param array $condition
      * @param string $deletedField
      * @return mixed
      */
-    public static function findDeleted(array $condition, string $deletedField = IsIsDeletedInterface::FIELD) {
+    public static function findDeleted(array $condition, string $deletedField = IsDeletedInterface::FIELD) {
         return static::findOne(array_merge($condition, ['not', $deletedField, null]));
     }
 
@@ -58,7 +41,7 @@ trait IsDeletedTrait
      * @param string $deletedField
      * @return mixed
      */
-    public static function findNotDeleted(array $condition, string $deletedField = IsIsDeletedInterface::FIELD) {
+    public static function findNotDeleted(array $condition, string $deletedField = IsDeletedInterface::FIELD) {
         return static::findOne(array_merge($condition, [$deletedField => null]));
     }
 
@@ -67,8 +50,8 @@ trait IsDeletedTrait
      */
     protected function deletedField() : string
     {
-        $property = IsIsDeletedInterface::DELETED_FIELD;
+        $property = IsDeletedInterface::DELETED_FIELD;
         return property_exists($this, $property) ?
-            $this->$property : IsIsDeletedInterface::FIELD;
+            $this->$property : IsDeletedInterface::FIELD;
     }
 }
