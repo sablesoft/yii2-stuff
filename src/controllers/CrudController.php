@@ -190,10 +190,12 @@ class CrudController extends Controller {
 
         if ($this->getModel()->load(Yii::$app->request->post())) {
             if ($this->getModel()->save()) {
+                $name = ucfirst($this->getUniqueId());
+                Yii::$app->session->addFlash('success', Yii::t('app', "$name successfully updated!"));
                 return $this->redirect(['view', 'id' => $this->getModel()->id]);
             } else {
-                foreach( $this->getModel()->getErrors() as $error )
-                    Yii::$app->session->addFlash('error', reset( $error ) );
+                foreach($this->getModel()->getErrors() as $error)
+                    Yii::$app->session->addFlash('error', reset($error));
             }
         }
 
