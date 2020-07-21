@@ -60,14 +60,16 @@ trait DateTimeTrait
 
     /**
      * @param string $attribute
+     * @param bool $asDate
      * @return array
      * @throws Exception
      */
-    public function datetimeColumn(string $attribute) : array
+    public function datetimeColumn(string $attribute, $asDate = false) : array
     {
+        $format = $asDate ? 'date' : 'datetime';
         return [
             'attribute' => $attribute,
-            'format' => 'datetime',
+            'format' => $format,
             'filter'  => DatePicker::widget([
                 'model' => $this,
                 'attribute' => $attribute,
