@@ -8,7 +8,7 @@ namespace sablesoft\stuff\interfaces;
  */
 interface IsDeletedInterface
 {
-    const DELETED_FIELD = 'deletedField';
+    const DELETED_FIELD = 'fieldDeleted';
     const FIELD = 'deleted';
 
     /**
