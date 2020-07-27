@@ -24,36 +24,50 @@ class CrudController extends Controller {
     protected string $searchModelsPath = 'app\models\search\\';
     protected ?string $modelClass = null;
     protected ?string $searchModelClass = null;
-
     protected array $primaryKey = ['id'];
 
     /** @var ActiveRecord|null $model */
     protected ?ActiveRecord $model = null;
 
     /**
+     * @var array
+     */
+    protected array $_vueConfig = [];
+
+    /**
+     * @param string|null $path
      * @return array
      */
-    public function getVueConfig() : array
+    public function getVueConfig(string $path = null) : array
     {
-        return [];
+        return $path ?
+            ArrayHelper::getValue($this->_vueConfig, $path) :
+            $this->_vueConfig;
+    }
+
+    /**
+     * @param string|null $path
+     * @param mixed $value
+     * @return $this
+     */
+    public function setVueConfig($value, string $path = null) : self
+    {
+        ArrayHelper::setValue($this->_vueConfig, $path, $value);
+        return $this;
     }
 
     /**
      * @param string $modelKey
      * @param array $where
-     * @param array $removeFields
      * @return array
      */
-    public function gridParams(string $modelKey, array $where, array $removeFields = []) : array
+    public function gridParams(string $modelKey, array $where) : array
     {
         $class = $this->searchModelsPath . ucfirst($modelKey) . 'Search';
         /** @var SearchInterface|ActiveRecord $search */
         $search = new $class();
         $search->setAttributes($where);
         $provider = $search->search(\Yii::$app->request->queryParams);
-        if (method_exists($search, 'prepareFields')) {
-            $search->prepareFields($removeFields);
-        }
         return [
             "${modelKey}Search"      => $search,
             "${modelKey}Provider"    => $provider
