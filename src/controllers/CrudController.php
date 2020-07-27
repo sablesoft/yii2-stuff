@@ -47,12 +47,25 @@ class CrudController extends Controller {
 
     /**
      * @param string|null $path
-     * @param mixed $value
+     * @param mixed $config
      * @return $this
      */
-    public function setVueConfig($value, string $path = null) : self
+    public function setVueConfig($config, string $path = null) : self
     {
-        ArrayHelper::setValue($this->_vueConfig, $path, $value);
+        ArrayHelper::setValue($this->_vueConfig, $path, $config);
+        return $this;
+    }
+
+    /**
+     * @param array $config
+     * @param string|null $path
+     * @return $this
+     */
+    public function addVueConfig(array $config, string $path = null) : self
+    {
+        $oldConfig = (array) $this->getVueConfig();
+        $newConfig = ArrayHelper::merge($oldConfig, $config);
+        $this->setVueConfig($newConfig, $path);
         return $this;
     }
 

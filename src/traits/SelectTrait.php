@@ -10,7 +10,6 @@ use sablesoft\stuff\interfaces\SelectInterface;
  * @package app\models\base
  *
  * @property array $dropDown
- * @method static find()
  */
 trait SelectTrait
 {
