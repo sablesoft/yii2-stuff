@@ -63,7 +63,7 @@ class CrudController extends Controller {
      */
     public function addVueConfig(array $config, string $path = null) : self
     {
-        $oldConfig = (array) $this->getVueConfig();
+        $oldConfig = (array) $this->getVueConfig($path);
         $newConfig = ArrayHelper::merge($oldConfig, $config);
         $this->setVueConfig($newConfig, $path);
         return $this;
@@ -136,7 +136,6 @@ class CrudController extends Controller {
      */
     public function render($view, $params = [])
     {
-        $this->prepareFields($params);
         $this->applyVue($view, $params);
         return parent::render($view, $params);
     }
@@ -349,7 +348,7 @@ class CrudController extends Controller {
      */
     protected function applyVue(string $view, array $params) : void
     {
-        $config = $this->vueConfig;
+        $config = $this->getVueConfig();
         if (!array_key_exists($view, $config)) {
             return;
         }
@@ -377,18 +376,6 @@ class CrudController extends Controller {
         /** @noinspection PhpUndefinedFieldInspection */
         $manager = \Yii::$app->vueManager;
         $manager->register($config);
-    }
-
-    /**
-     * @param array $params
-     */
-    protected function prepareFields(array $params) : void
-    {
-        foreach ($params as $param) {
-            if (is_object($param) && method_exists($param, 'prepareFields')) {
-                $param->prepareFields();
-            }
-        }
     }
 
     /**
