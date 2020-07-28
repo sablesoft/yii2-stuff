@@ -36,12 +36,13 @@ class CrudController extends Controller {
 
     /**
      * @param string|null $path
+     * @param null $default
      * @return array
      */
-    public function getVueConfig(string $path = null) : array
+    public function getVueConfig(string $path = null, $default = null)
     {
         return $path ?
-            ArrayHelper::getValue($this->_vueConfig, $path) :
+            ArrayHelper::getValue($this->_vueConfig, $path, $default) :
             $this->_vueConfig;
     }
 
