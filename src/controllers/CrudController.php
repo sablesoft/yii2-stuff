@@ -149,7 +149,7 @@ class CrudController extends Controller {
         $class = $this->getModelClass(true);
         /** @var ActiveRecord|SearchInterface $searchModel */
         $searchModel = new $class();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search($this->getParams());
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -165,7 +165,7 @@ class CrudController extends Controller {
         if(!$model = $this->getModel()) {
             return $this->redirect('index');
         }
-        $model->load(Yii::$app->request->get());
+        $model->load($this->getParams());
 
         return $this->render('view', [
             'model' => $this->getModel()
@@ -400,6 +400,20 @@ class CrudController extends Controller {
             'success',
             \Yii::t('app', "$name $attribute successfully set as $value!")
         );
+    }
+
+    /**
+     * @return array
+     */
+    public function getParams() : array
+    {
+        if (Yii::$app->request->isPost) {
+            return Yii::$app->request->post();
+        }
+        if (Yii::$app->request->isGet) {
+            return Yii::$app->request->get();
+        }
+        return [];
     }
 
     /**
