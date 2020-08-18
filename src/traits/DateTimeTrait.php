@@ -103,7 +103,7 @@ trait DateTimeTrait
     public function getCreated(): ?string
     {
         $field = $this->getCreatedField();
-        return $this->hasAttribute($field) ? $this->$field : null;
+        return $this->hasProperty($field) ? $this->$field : null;
     }
 
     /**
@@ -113,7 +113,7 @@ trait DateTimeTrait
     public function setCreated(string $created)
     {
         $field = $this->getCreatedField();
-        if ($this->hasAttribute($field) && !$this->$field) {
+        if ($this->hasProperty($field) && !$this->$field) {
             $this->$field = $created;
         }
 
@@ -135,7 +135,7 @@ trait DateTimeTrait
     public function getUpdated(): ?string
     {
         $field = $this->getUpdatedField();
-        return $this->hasAttribute($field) ? $this->$field : null;
+        return $this->hasProperty($field) ? $this->$field : null;
     }
 
     /**
@@ -145,7 +145,7 @@ trait DateTimeTrait
     public function setUpdated(string $updated)
     {
         $field = $this->getUpdatedField();
-        if ($this->hasAttribute($field)) {
+        if ($this->hasProperty($field)) {
             $this->$field = $updated;
         }
 
@@ -167,7 +167,7 @@ trait DateTimeTrait
     public function getDeleted(): ?string
     {
         $field = $this->getDeletedField();
-        return $this->hasAttribute($field) ? $this->$field : null;
+        return $this->hasProperty($field) ? $this->$field : null;
     }
 
     /**
@@ -177,7 +177,7 @@ trait DateTimeTrait
     public function setDeleted(string $deleted)
     {
         $field = $this->getDeletedField();
-        if ($this->hasAttribute($field) && !$this->$field) {
+        if ($this->hasProperty($field) && !$this->$field) {
             $this->$field = $deleted;
         }
 
@@ -199,7 +199,7 @@ trait DateTimeTrait
     public function getLastAction(): ?string
     {
         $field = $this->getLastActionField();
-        return $this->hasAttribute($field) ? $this->$field : null;
+        return $this->hasProperty($field) ? $this->$field : null;
     }
 
     /**
@@ -209,7 +209,7 @@ trait DateTimeTrait
     public function setLastAction(string $lastAction)
     {
         $field = $this->getLastActionField();
-        if ($this->hasAttribute($field)) {
+        if ($this->hasProperty($field)) {
             $this->$field = $lastAction;
         }
 
@@ -222,7 +222,7 @@ trait DateTimeTrait
     public function updateLastAction()
     {
         $field = $this->getLastActionField();
-        if (!$this->hasAttribute($field)) {
+        if (!$this->hasProperty($field)) {
             return $this;
         }
 
@@ -238,7 +238,7 @@ trait DateTimeTrait
      */
     public function applyDateFilter(string $attribute, ActiveQuery $query)
     {
-        if(!$this->hasAttribute($attribute) || empty($this->$attribute)) {
+        if(!$this->hasProperty($attribute) || empty($this->$attribute)) {
             return;
         }
 

@@ -20,8 +20,11 @@ trait SearchTrait
     public function applyFilters(ActiveQuery $query)
     {
         foreach ($this->filters as $operator => $fields) {
-            foreach($fields as $field) {
-                $query->andFilterWhere([$operator, $field, $this->$field]);
+            foreach($fields as $field => $dbField) {
+                if (is_int($field)) {
+                    $field = $dbField;
+                }
+                $query->andFilterWhere([$operator, $dbField, $this->$field]);
             }
         }
     }
